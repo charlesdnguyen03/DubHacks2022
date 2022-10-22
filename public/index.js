@@ -1,12 +1,3 @@
-/**
- * Name: _your name here_
- * Date: _add date here_
- * Section: CSE 154 _your section here_
- *
- * -- your description of what this file does here --
- * Do not keep comments from this template in any work you submit (functions included under "Helper
- * functions" are an exception, you may keep the function names/comments of id/qs/qsa/gen)
- */
  "use strict";
 
  (function() {
@@ -22,6 +13,7 @@
     * CHANGE: Describe what your init function does here.
     */
     function init() {
+      console.log("hi");
       // THIS IS THE CODE THAT WILL BE EXECUTED ONCE THE WEBPAGE LOADS
     }
 
