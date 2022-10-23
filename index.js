@@ -176,7 +176,7 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
       progressThree.value = data["p3-progress"];
       progressFour.value = data["p4-progress"];
 
-      if (progressOne === 100 || progressTwo === 100 || progressThree === 100 || progressFour === 100) {
+      if (progressOne.value === 100 || progressTwo.value === 100 || progressThree.value === 100 || progressFour.value === 100) {
         data["game-over"] = true;
         gameJSON = data;
         let gameRef = firebase.database().ref(`Game/1`);
