@@ -124,6 +124,7 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
       "p3-progress": 0,
       "p4-progress": 0,
       "words": quote,
+      "game-over": false
     };
 
     let gameRef = firebase.database().ref(`Game/1`);
@@ -190,12 +191,51 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
       progressThree.value = data["p3-progress"];
       progressFour.value = data["p4-progress"];
 
+      if (progressOne === 100 || progressTwo === 100 || progressThree === 100 || progressFour === 100) {
+        data["game-over"] = true;
+        let gameRef = firebase.database().ref(`Game/1`);
+        gameRef.set(JSON.stringify(gameJSON));
+      }
+
+      let winOrLose = false;
+
+      if (data["p" + playerNumber + "-progress"] === 100) {
+        winOrLose = true;
+      }
 
 
+      if (data["game-over"]) {
+        endgame(winOrLose);
+      }
       gameJSON = data;
+   }
 
+   function endgame(winOrLose) {
 
+    if (winOrLose) {
+      console.log("you won");
+    } else {
+      console.log("you lost");
+    }
 
+    id("progress-bars").innerHTML = "";
+    can = null;
+    playerNumber = null;
+    arrayQuote = [];
+    curIndex = 0;
+    valueWord = "";
+    qs("#input-result p").textContent = "";
+    id("canvas-section").innerHTML = "";
+    id("user-button").innerHTML = "";
+
+    setTimeout(function() {
+      firebase.database().ref("Users").remove().catch(function(error){
+        console.log("Remove failed: " + error.message)
+      });
+      firebase.database().ref("Game/1").remove().catch(function(error){
+        console.log("Remove failed: " + error.message)
+      });
+    },1000);
    }
 
    function switchToGame() {
@@ -267,7 +307,10 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
      let timerId = setInterval(() => {
        timer.innerText = 90 - getTimerTime();
        if(Number(timer.textContent) === 0) {
-         clearInterval(timerId);
+        clearInterval(timerId);
+        gameJSON["game-over"] = true;
+        let gameRef = firebase.database().ref(`Game/1`);
+        gameRef.set(JSON.stringify(gameJSON));
        }
      }, 1000);
    }
