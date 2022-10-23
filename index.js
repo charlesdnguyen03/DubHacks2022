@@ -123,7 +123,7 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
       "words": quote,
     };
 
-    gameRef = firebase.database().ref(`Game/1`);
+    let gameRef = firebase.database().ref(`Game/1`);
     gameRef.set(JSON.stringify(gameJSON));
 
     gameRef.on("value", (snap) => {
