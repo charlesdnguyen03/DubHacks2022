@@ -307,11 +307,13 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
    }
 
    function gameToLost() {
+    id("won").classList.add("hidden");
     id("lost").classList.remove("hidden");
     id("game").classList.add("hidden");
    }
 
    function gameToWon() {
+    id("lost").classList.add("hidden");
     id("won").classList.remove("hidden");
     id("game").classList.add("hidden");
    }
