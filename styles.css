@@ -196,7 +196,7 @@ progress {
     flex-direction: row;
 }
 
-#queue div{
+#queue div, #lost div, #won div {
     margin-top: 15%;
     width: 100%;
     padding: 2%;
@@ -207,6 +207,7 @@ progress {
     font-size: 24pt;
 }
 
-#queue h1 {
+#queue h1, #lost h1, #won h1 {
     font-size: 34pt;
 }
+

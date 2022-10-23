@@ -52,23 +52,9 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
    * CHANGE: Describe what your init function does here.
    */
    function init() {
-
-
-    // menu
-
     qs("#menu-buttons button").addEventListener("click", startQueue);
-
-    // queuing screen
-
-
-    // game
-
-    // result
-
-     // THIS IS THE CODE THAT WILL BE EXECUTED ONCE THE WEBPAGE LOADS
-
-
-
+    id("won-button").addEventListener("click", wonToMenu);
+    id("lost-button").addEventListener("click", lostToMenu);
    }
 
    function startQueue() {
@@ -78,7 +64,6 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
 
    function searchForGame() {
     playerRef = firebase.database().ref(`Users/${playerId}`);
-
 
     playerRef.set({
       uid: playerId
@@ -213,9 +198,9 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
    function endgame(winOrLose) {
 
     if (winOrLose) {
-      console.log("you won");
+      gameToWon();
     } else {
-      console.log("you lost");
+      gameToLost();
     }
 
     id("progress-bars").innerHTML = "";
@@ -246,7 +231,6 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
    function menuToQueue() {
     id("menu").classList.add("hidden");
     id("queue").classList.remove("hidden");
-
    }
 
 
@@ -319,7 +303,25 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
      return Math.floor((new Date() - startTime) / 1000);
    }
 
+   function gameToLost() {
+    id("lost").classList.remove("hidden");
+    id("game").classList.add("hidden");
+   }
 
+   function gameToWon() {
+    id("won").classList.remove("hidden");
+    id("game").classList.add("hidden");
+   }
+
+   function lostToMenu() {
+    id("lost").classList.add("hidden");
+    id("menu").classList.remove("hidden");
+   }
+
+   function wonToMenu() {
+    id("won").classList.add("hidden");
+    id("menu").classList.remove("hidden");
+   }
 
 
    /**
