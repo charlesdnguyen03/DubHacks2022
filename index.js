@@ -110,7 +110,7 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
 
     let quote = getRandomQuote();
 
-    gameJSON = {
+    let gameJSON = {
       "players": usersKeyArray,
       "p1-progress": 0,
       "p2-progress": 0,
