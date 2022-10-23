@@ -30,28 +30,12 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
       console.log("you're logged in");
       playerId = user.uid;
 
-      // console.log(playerId);
-      // let Games = {
-      //   "numWords": 10,
-      //   "timer": 0,
-      //   "userState": "temp",
-      //   "users": "me",
-      //   "winner": false,
-      //   "words": "temp"
-      // }
 
-      // Games = JSON.stringify(Games);
-      // playerRef = firebase.database().ref(`Games/${playerId}`);
+      // let gameRef = firebase.database().ref(`Games/1`);
+      // gameRef.set({
+      //   game: "no"
+      // })
 
-      // playerRef.set({
-      //   numWords: 10,
-      //   timer: 0,
-      //   userState: "hi",
-      //   users:"ryan",
-      //   winner:false,
-      //   words:"temp"
-      // });
-      playerRef.onDisconnect().remove();
     } else {
       console.log("you're NOT logged in");
     }
@@ -70,9 +54,10 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
 
     // menu
 
-
+    qs("#menu-buttons button").addEventListener("click", startQueue);
 
     // queuing screen
+
 
     // game
 
@@ -82,9 +67,41 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
      renderNewQuote();
      generateCanvas();
 
-     console.log(firebase);
+   }
+
+   function startQueue() {
+      menuToQueue();
+      searchForGame();
+   }
+
+   function searchForGame() {
+    playerRef = firebase.database().ref(`Users/${playerId}`);
+
+    playerRef.set({
+      uid: playerId
+    });
+
+    playerRef.onDisconnect().remove();
+
+    let ref = firebase.database().ref("Users");
+
+    ref.on("value", (snap) => {
+      console.log(snap.val());
+    })
+
+
+
+
+
+
 
    }
+
+   function menuToQueue() {
+    id("menu").classList.add("hidden");
+    id("queue").classList.remove("hidden");
+   }
+
 
    function checkInput() {
      console.log("changed");
@@ -142,6 +159,9 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
    function getTimerTime() {
      return Math.floor((new Date() - startTime) / 1000);
    }
+
+
+
 
    /**
    * Make sure to always add a descriptive comment above
