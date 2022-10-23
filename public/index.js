@@ -199,7 +199,7 @@
     function getRandomQuote() {
       let quote = "";
 
-      let wordAmount = getRandomIntBetween(2, 3);
+      let wordAmount = getRandomIntBetween(10, 25);
 
       "this is a string"
       for (let i = 0; i < wordAmount; i++) {
