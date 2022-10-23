@@ -26,6 +26,7 @@
       /* SOME CODE */
     }
 
+
     /**
     * Make sure to always add a descriptive comment above
     * every function detailing what it's purpose is
