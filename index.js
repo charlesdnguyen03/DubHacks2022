@@ -64,8 +64,7 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
     // result
 
      // THIS IS THE CODE THAT WILL BE EXECUTED ONCE THE WEBPAGE LOADS
-     renderNewQuote();
-     generateCanvas();
+
 
    }
 
@@ -76,6 +75,7 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
 
    function searchForGame() {
     playerRef = firebase.database().ref(`Users/${playerId}`);
+
 
     playerRef.set({
       uid: playerId
@@ -89,24 +89,67 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
     ref.on("value", (snap) => {
       console.log(snap.val());
       users = snap.val();
-
-      let userAmount = Object.keys(users);
+      let userAmount = Object.keys(users).length;
       console.log(userAmount);
+      if (userAmount === 3) {
+        startGame(Object.keys(users));
+      }
     })
+   }
 
 
+   function startGame(usersKeyArray) {
+    firebase.database().ref("Users").remove().catch(function(error){
+      console.log("Remove failed: " + error.message)
+    });
 
+    usersKeyArray.sort();
 
+    let quote = getRandomQuote();
 
+    gameJSON = {
+      "players": usersKeyArray,
+      "p1-progress": 0,
+      "p2-progress": 0,
+      "p3-progress": 0,
+      "p4-progress": 0,
+      "p1-wpm": 0,
+      "p2-wpm": 0,
+      "p3-wpm": 0,
+      "p4-wpm": 0,
+      "words": quote,
+    };
 
+    gameRef = firebase.database().ref(`Game/1`);
+    gameRef.set(JSON.stringify(gameJSON));
 
+    gameRef.on("value", (snap) => {
+      gameJSON = snap.val();
+      console.log(gameJSON);
+    });
 
+    setTimeout(function() {
+      startMatch(JSON.parse(gameJSON));
+    },1500);
+   }
 
+   function startMatch(gameJSON) {
+    switchToGame();
+    renderNewQuote(gameJSON.words);
+    generateCanvas();
+    startTimer();
+    console.log(gameJSON);
+   }
+
+   function switchToGame() {
+    id("queue").classList.add("hidden");
+    id("game").classList.remove("hidden");
    }
 
    function menuToQueue() {
     id("menu").classList.add("hidden");
     id("queue").classList.remove("hidden");
+
    }
 
 
@@ -135,10 +178,10 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
     //  if(curIndex === arrayQuote.length && correct) renderNewQuote();
    }
 
-   function renderNewQuote() {
+   function renderNewQuote(string) {
      curIndex = 0;
      arrayQuote = [];
-     const quote = getRandomQuote();
+     const quote = string;
      quoteDisplayElement.innerHTML = '';
      quote.split(" ").forEach(word => {
        const wordSpan = gen('span');
@@ -147,18 +190,16 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
        arrayQuote.push(word);
      })
 
-     startTimer();
    }
 
    let startTime;
    function startTimer() {
-     timerElement.innerText = 90;
+     timerElement.innerText = 92;
      startTime = new Date();
      let timerId = setInterval(() => {
        timer.innerText = 90 - getTimerTime();
        if(Number(timer.textContent) === 0) {
          clearInterval(timerId);
-         renderNewQuote();
        }
      }, 1000);
    }
@@ -285,7 +326,6 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
 
      let wordAmount = getRandomIntBetween(10, 15);
 
-     "this is a string"
      for (let i = 0; i < wordAmount; i++) {
        let currentWord = words[getRandomIndex(words)].toLowerCase();
 
