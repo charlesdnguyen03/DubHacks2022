@@ -442,7 +442,7 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
    function getRandomQuote() {
      let quote = "";
 
-     let wordAmount = getRandomIntBetween(10, 15);
+     let wordAmount = getRandomIntBetween(2, 5); // 10 - 15
 
      for (let i = 0; i < wordAmount; i++) {
        let currentWord = words[getRandomIndex(words)].toLowerCase();
