@@ -1,5 +1,6 @@
 * {
     box-sizing: border-box;
+    font-family: "Inter";
 }
 
 body {
@@ -193,4 +194,19 @@ progress {
 #progress-bars {
     margin-top: 1%;
     flex-direction: row;
+}
+
+#queue div{
+    margin-top: 15%;
+    width: 100%;
+    padding: 2%;
+    margin-bottom: 0;
+}
+
+#queue p, #queue span {
+    font-size: 24pt;
+}
+
+#queue h1 {
+    font-size: 34pt;
 }
