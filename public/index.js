@@ -1,5 +1,7 @@
  "use strict";
 
+ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
+
  (function() {
 
     // MODULE GLOBAL VARIABLES, CONSTANTS, AND HELPER FUNCTIONS CAN BE PLACED HERE
@@ -17,13 +19,10 @@
       // THIS IS THE CODE THAT WILL BE EXECUTED ONCE THE WEBPAGE LOADS
     }
 
-    /**
-    * Make sure to always add a descriptive comment above
-    * every function detailing what it's purpose is
-    * Use JSDoc format with @param and @return.
-    */
-    function exampleFunction1() {
-      /* SOME CODE */
+    function getRandomQuote() {
+      return fetch(RANDOM_QUOTE_API_URL)
+        .then(Response => Response.json())
+        .then(data => data,content);
     }
 
 
