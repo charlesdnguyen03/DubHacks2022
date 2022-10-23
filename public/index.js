@@ -79,4 +79,42 @@
       return document.createElement(tagName);
     }
 
+
+    function generateCanvas() {
+
+      let section = gen("section");
+      section.id = "canvas-section";
+      qs("body").append(section);
+
+      let canvasElement = gen("canvas");
+      canvasElement.id = "can";
+      canvasElement.width = "700";
+      canvasElement.height = "250";
+      id("canvas-section").append(canvasElement);
+      let can = new handwriting.Canvas(id("can"));
+
+      can.setCallBack(function(data) {
+        updateUserInput(data, can);
+      });
+
+      can.setOptions(
+        {
+          language: "en",
+          numOfReturn: 5
+        }
+      );
+
+      ["click", "touchend"].forEach(function(e) {
+        id("can").addEventListener(e,() => {
+          can.recognize();
+        });
+      });
+
+    }
+
+    function updateUserInput(data, can) {
+      console.log(data);
+    }
+
+
  })();
