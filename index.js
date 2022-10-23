@@ -85,9 +85,16 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
 
     let ref = firebase.database().ref("Users");
 
+    let users;
     ref.on("value", (snap) => {
       console.log(snap.val());
+      users = snap.val();
+
+      let userAmount = Object.keys(users);
+      console.log(userAmount);
     })
+
+
 
 
 
