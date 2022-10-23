@@ -10,6 +10,7 @@
     let arrayQuote = [];
     let curIndex = 0;
     let valueWord = "";
+    let can;
     // MODULE GLOBAL VARIABLES, CONSTANTS, AND HELPER FUNCTIONS CAN BE PLACED HERE
 
     /**
@@ -42,6 +43,9 @@
         arrayQuoteSpan[curIndex].classList.remove('incorrect');
         // correct word, moving onto next
         curIndex++;
+        can.erase();
+        clearDisplayText();
+
       } else {
         arrayQuoteSpan[curIndex].classList.remove('correct');
         arrayQuoteSpan[curIndex].classList.add('incorrect');
@@ -68,13 +72,12 @@
 
     let startTime;
     function startTimer() {
-      timerElement.innerText = 90;
+      timerElement.innerText = 5;
       startTime = new Date();
       let timerId = setInterval(() => {
-        timer.innerText = 90 - getTimerTime();
+        timer.innerText = 5 - getTimerTime();
         if(Number(timer.textContent) === 0) {
           clearInterval(timerId);
-          renderNewQuote();
         }
       }, 1000);
     }
@@ -139,14 +142,12 @@
 
     function generateCanvas() {
 
-
-
       let canvasElement = gen("canvas");
       canvasElement.id = "can";
       canvasElement.width = "900";
       canvasElement.height = "300";
       id("canvas-section").append(canvasElement);
-      let can = new handwriting.Canvas(id("can"));
+      can = new handwriting.Canvas(id("can"));
 
       can.setCallBack(function(data) {
         updateUserInput(data, can);
@@ -191,9 +192,19 @@
     function updateTextBox(data) {
       let element = qs("#input-result p");
       let result = data[0].toLowerCase();
-      element.textContent = result;
-      valueWord = data[0].toLowerCase();
-      checkInput();
+      element.textContent = result;cle
+      let wordAmount = getRandomIntBetween(10, 25);
+
+      for (let i = 0; i < wordAmount; i++) {
+        let currentWord = words[getRandomIndex(words)].toLowerCase();
+
+        quote += currentWord;
+        if (i + 1 != wordAmount) {
+          quote += " ";
+        }
+      }
+
+      return quote;
     }
 
     function getRandomQuote() {
@@ -213,6 +224,7 @@
 
       return quote;
     }
+
 
     function getRandomIntBetween(min, max) {
       min = Math.ceil(min);
