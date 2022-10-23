@@ -12,11 +12,13 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
    let valueWord = "";
 
    let can;
+   let playerNumber;
    // MODULE GLOBAL VARIABLES, CONSTANTS, AND HELPER FUNCTIONS CAN BE PLACED HERE
 
 
    let playerId;
    let playerRef;
+   let gameJSON;
 
    firebase.auth().signInAnonymously().catch((error)=> {
     let errorCode = error.code;
@@ -64,6 +66,10 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
     // result
 
      // THIS IS THE CODE THAT WILL BE EXECUTED ONCE THE WEBPAGE LOADS
+     renderNewQuote("test test Test test test Test test test Test test test Test test test Test test test");
+     generateCanvas();
+     startTimer();
+
 
 
    }
@@ -91,7 +97,7 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
       users = snap.val();
       let userAmount = Object.keys(users).length;
       console.log(userAmount);
-      if (userAmount === 3) {
+      if (userAmount === 4) {
         startGame(Object.keys(users));
       }
     })
@@ -110,16 +116,12 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
 
     let quote = getRandomQuote();
 
-    let gameJSON = {
+    gameJSON = {
       "players": usersKeyArray,
       "p1-progress": 0,
       "p2-progress": 0,
       "p3-progress": 0,
       "p4-progress": 0,
-      "p1-wpm": 0,
-      "p2-wpm": 0,
-      "p3-wpm": 0,
-      "p4-wpm": 0,
       "words": quote,
     };
 
@@ -138,10 +140,52 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
 
    function startMatch(gameJSON) {
     switchToGame();
+    generateProgress(gameJSON);
     renderNewQuote(gameJSON.words);
     generateCanvas();
     startTimer();
-    console.log(gameJSON);
+
+
+    let gameRef = firebase.database().ref(`Game/1`);
+    gameRef.on("value", (snap) => {
+      updateCheck(JSON.parse(snap));
+    })
+   }
+
+   function generateProgress(gameJSON) {
+    let players = gameJSON.players;
+
+    for (let i = 1; i <= 4; i++) {
+      let div = gen("div");
+      let pTag = gen("p");
+      let progress = gen("progress");
+
+      let pTagText;
+      if (players[i - 1] === playerId) {
+        pTagText = "You";
+        playerNumber = i;
+      } else {
+        pTagText = "P" + i;
+      }
+      pTag.textContent = pTagText;
+      progress.max = 100;
+      progress.value = 0;
+      progress.id = "p" + i;
+
+      div.append(pTag);
+      div.append(progress);
+      id("progress-bars").append(div);
+    }
+   }
+
+   function updateCheck(data) {
+      let progressOne = id("p1");
+      let progressTwo = id("p1");
+      let progressThree = id("p1");
+      let progressFour = id("p1");
+
+      gameJSON = data;
+
    }
 
    function switchToGame() {
@@ -171,7 +215,9 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
        arrayQuoteSpan[curIndex].classList.remove('incorrect');
        // correct word, moving onto next
        can.erase();
+       clearDisplayText();
        curIndex++;
+       updateProgress(curIndex, arrayQuoteSpan.length);
      } else {
        arrayQuoteSpan[curIndex].classList.remove('correct');
        arrayQuoteSpan[curIndex].classList.add('incorrect');
@@ -179,6 +225,15 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
      }
 
     //  if(curIndex === arrayQuote.length && correct) renderNewQuote();
+   }
+
+   function updateProgress(amountDone, total) {
+
+    let tag = 'p'+playerNumber+'-progress';
+    gameJSON[tag] = Math.floor((amountDone / total) * 100);
+
+    let gameRef = firebase.database().ref(`Game/1`);
+    gameRef.set(JSON.stringify(gameJSON));
    }
 
    function renderNewQuote(string) {

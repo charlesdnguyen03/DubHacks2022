@@ -118,7 +118,7 @@ span {
 }
 
 #user-area {
-    margin-top: 2.5%;
+    margin-top: 1%;
     width: 115%;
     min-width: 75%;
 }
@@ -171,4 +171,26 @@ button:active {
 
 .hidden {
     display: none !important;
+}
+
+
+#progress-bars p {
+    padding-right: 5px;
+}
+
+progress {
+    padding-top: 15%;
+    height: 5px;
+}
+
+#progress-bars div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 1%;
+}
+
+#progress-bars {
+    margin-top: 1%;
+    flex-direction: row;
 }
