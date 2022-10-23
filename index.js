@@ -145,7 +145,7 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
 
     let gameRef = firebase.database().ref(`Game/1`);
     gameRef.on("value", (snap) => {
-      updateCheck(JSON.parse(snap));
+      updateCheck(JSON.parse(snap.val()));
     })
    }
 
