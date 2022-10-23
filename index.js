@@ -191,7 +191,9 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
 
 
       if (data["game-over"]) {
-        endgame(winOrLose);
+        setTimeout(function() {
+          endgame(winOrLose);
+        },500)
       }
       gameJSON = data;
    }
