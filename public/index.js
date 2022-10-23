@@ -5,8 +5,11 @@
  (function() {
 
     const quoteDisplayElement = id('quote_display');
-    const quoteInputElement = id("quote_input");
     const timerElement = id('timer');
+
+    let arrayQuote = [];
+    let curIndex = 0;
+    let valueWord = "";
     // MODULE GLOBAL VARIABLES, CONSTANTS, AND HELPER FUNCTIONS CAN BE PLACED HERE
 
     /**
@@ -21,49 +24,45 @@
       console.log("hi");
       // THIS IS THE CODE THAT WILL BE EXECUTED ONCE THE WEBPAGE LOADS
       renderNewQuote();
-
-      quoteInputElement.addEventListener('input', () => {
-        const arrayQuote = quoteDisplayElement.querySelectorAll('span');
-        const arrayValue = quoteInputElement.value.split('');
-        let correct = true;
-
-        arrayQuote.forEach((characterSpan, index) => {
-          const character = arrayValue[index];
-          if(character == null) {
-            characterSpan.classList.remove('correct');
-            characterSpan.classList.remove('incorrect');
-            correct = false;
-          }
-          else if(character === characterSpan.innerText) {
-            characterSpan.classList.add('correct');
-            characterSpan.classList.remove('incorrect');
-          } else {
-            characterSpan.classList.remove('correct');
-            characterSpan.classList.add('incorrect');
-            correct = false;
-          }
-        })
-
-        if(correct) renderNewQuote();
-      })
+      generateCanvas();
     }
 
-    function getRandomQuote() {
-      return fetch(RANDOM_QUOTE_API_URL)
-        .then(Response => Response.json())
-        .then(data => data.content);
+    function checkInput() {
+      console.log("changed");
+      let correct = true;
+      const arrayQuoteSpan = quoteDisplayElement.querySelectorAll('span');
+      
+      if(valueWord == null) {
+        arrayQuoteSpan[curIndex].classList.remove('correct');
+        arrayQuoteSpan[curIndex].classList.remove('incorrect');
+        correct = false;
+      }
+      else if(arrayQuote[curIndex] === valueWord) {
+        arrayQuoteSpan[curIndex].classList.add('correct');
+        arrayQuoteSpan[curIndex].classList.remove('incorrect');
+        // correct word, moving onto next
+        curIndex++;
+      } else {
+        arrayQuoteSpan[curIndex].classList.remove('correct');
+        arrayQuoteSpan[curIndex].classList.add('incorrect');
+        correct = false;
+      }
+
+      if(curIndex === arrayQuote.length && correct) renderNewQuote();
     }
 
-    async function renderNewQuote() {
-      const quote = await getRandomQuote();
+    function renderNewQuote() {
+      curIndex = 0;
+      arrayQuote = [];
+      const quote = getRandomQuote();
       quoteDisplayElement.innerHTML = '';
-      quote.split('').forEach(character => {
-        const characterSpan = gen('span');
-        characterSpan.innerText = character;
-        quoteDisplayElement.appendChild(characterSpan);
+      quote.split(" ").forEach(word => {
+        const wordSpan = gen('span');
+        wordSpan.innerText = word + " ";
+        quoteDisplayElement.appendChild(wordSpan);
+        arrayQuote.push(word);
       })
 
-      quoteInputElement.value = null;
       startTimer();
     }
 
@@ -135,6 +134,94 @@
     */
     function gen(tagName) {
       return document.createElement(tagName);
+    }
+
+
+    function generateCanvas() {
+
+
+
+      let canvasElement = gen("canvas");
+      canvasElement.id = "can";
+      canvasElement.width = "900";
+      canvasElement.height = "300";
+      id("canvas-section").append(canvasElement);
+      let can = new handwriting.Canvas(id("can"));
+
+      can.setCallBack(function(data) {
+        updateUserInput(data, can);
+      });
+
+      can.setOptions(
+        {
+          language: "en",
+          numOfReturn: 5
+        }
+      );
+
+      ["click", "touchend"].forEach(function(e) {
+        id("can").addEventListener(e,() => {
+          can.recognize();
+        });
+      });
+
+      let clear = gen("button");
+      clear.id = "clear-button";
+      clear.textContent = "clear";
+      id("user-button").append(clear);
+
+      id("clear-button").addEventListener("click", () => {
+        can.erase();
+        clearDisplayText()
+      });
+
+    }
+
+    function clearDisplayText() {
+      let element = qs("#input-result p");
+      element.textContent = "";
+    }
+
+    function updateUserInput(data, can) {
+      updateTextBox(data);
+      //check answer
+      console.log(data);
+    }
+
+    function updateTextBox(data) {
+      let element = qs("#input-result p");
+      let result = data[0].toLowerCase();
+      element.textContent = result;
+      valueWord = data[0].toLowerCase();
+      checkInput();
+    }
+
+    function getRandomQuote() {
+      let quote = "";
+
+      let wordAmount = getRandomIntBetween(2, 3);
+
+      "this is a string"
+      for (let i = 0; i < wordAmount; i++) {
+        let currentWord = words[getRandomIndex(words)].toLowerCase();
+
+        quote += currentWord;
+        if (i + 1 != wordAmount) {
+          quote += " ";
+        }
+      }
+
+      return quote;
+    }
+
+    function getRandomIntBetween(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min) + min);
+    }
+
+    function getRandomIndex(array) {
+      return Math.floor(Math.random()*array.length);
     }
 
  })();

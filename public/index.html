@@ -10,14 +10,23 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
   <title>Speeeed Typing</title>
+
+  <script type="text/javascript" src="./handwriting.canvas.js"></script>
   <script src="words.js"></script>
   <script src="index.js" defer></script>
 </head>
 <body>
-  <div class="timer" id="timer">0</div>
-  <div class="container">
-    <div class="quote-display" id="quote_display">quote</div>
-    <textarea class="quote-input" id="quote_input" autofocus>quote</textarea>
-  </div>
+  <section id="game">
+    <div class="timer" id="timer">0</div>
+    <div class="container">
+      <div class="quote-display" id="quote_display">quote</div>
+    </div>
+    <div class="container" id="user-area">
+      <section id="input-result"><p>test</p></section>
+      <section id="canvas-section"></section>
+      <section id="user-button"></section>
+    </div>
+  </section>
+
 </body>
 </html>

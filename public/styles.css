@@ -16,11 +16,13 @@ body, .quote-input {
 }
 
 .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     background-color: azure;
-    padding: 1rem;
     border-radius: .5rem;
-    width: 700px;
-    max-width: 90%;
+    width: 85%;
 }
 
 .timer {
@@ -35,6 +37,12 @@ body, .quote-input {
     margin-bottom: 1;
     margin-left: calc(1rem + 2px);
     margin-left: calc(1rem + 2px);
+    padding: 5%;
+}
+
+
+span {
+    font-size: 22pt;
 }
 
 .quote-input {
@@ -60,4 +68,33 @@ body, .quote-input {
 
 .incorrect {
     color: red;
+}
+
+#canvas-section {
+    justify-content: center;
+    flex-direction: column;
+    padding: 1%;
+    background-color: white;
+}
+
+#can {
+    border-style: solid;
+}
+
+#user-area {
+    margin-top: 2.5%;
+    width: 100%;
+}
+
+#input-result {
+    font-size: 26pt;
+}
+
+#game {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10%;
+    margin-right: 10%;
 }
