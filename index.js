@@ -94,12 +94,16 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
       users = snap.val();
       let userAmount = Object.keys(users).length;
       console.log(userAmount);
+      updateAmountQueue(userAmount);
       if (userAmount === 4) {
         startGame(Object.keys(users));
       }
     })
    }
 
+   function updateAmountQueue(userAmount) {
+    id("people-amount").textContent = userAmount;
+   }
 
    function startGame(usersKeyArray) {
     // setTimeout(function() {
