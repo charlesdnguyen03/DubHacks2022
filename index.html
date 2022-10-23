@@ -47,7 +47,7 @@
 </head>
 <body>
 
-  <section id="menu" class="flex">
+  <section id="menu" class="flex hidden">
     <section id="title">
       <h1>Write Racer</h1>
     </section>
@@ -58,13 +58,32 @@
 
   <section id="queue" class="flex hidden">
     <h1> this is the queue screen</h1>
-
   </section>
 
-  <section id="game" class="hidden">
+  <section id="game" class="">
     <div class="timer" id="timer">0</div>
     <div class="container">
       <div class="quote-display" id="quote_display">quote</div>
+    </div>
+    <div class="container" id="progress-bars">
+      <div>
+        <p>P1</p>
+        <progress value="0" max="100"></progress>
+      </div>
+      <div>
+        <p>P2</p>
+        <progress value="0" max="100"></progress>
+      </div>
+      <div>
+        <p>P3</p>
+        <progress value="70" max="100"></progress>
+      </div>
+      <div>
+        <p>P4</p>
+        <progress value="50" max="100"></progress>
+      </div>
+
+
     </div>
     <div class="container" id="user-area">
       <section id="input-result"><p></p></section>
