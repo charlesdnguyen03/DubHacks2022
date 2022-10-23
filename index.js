@@ -99,9 +99,12 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
 
 
    function startGame(usersKeyArray) {
-    firebase.database().ref("Users").remove().catch(function(error){
-      console.log("Remove failed: " + error.message)
-    });
+    setTimeout(function() {
+      firebase.database().ref("Users").remove().catch(function(error){
+        console.log("Remove failed: " + error.message)
+      });
+    },1000);
+
 
     usersKeyArray.sort();
 
