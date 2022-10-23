@@ -1,9 +1,8 @@
- "use strict";
-
+ 
+"use strict";
  const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
 
  (function() {
-
     const quoteDisplayElement = id('quote_display');
     const timerElement = id('timer');
 
@@ -12,6 +11,32 @@
     let valueWord = "";
     let can;
     // MODULE GLOBAL VARIABLES, CONSTANTS, AND HELPER FUNCTIONS CAN BE PLACED HERE
+
+
+
+    // Import the functions you need from the SDKs you need
+
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyCsmqZ8Y87u9k3xofzcMapRdleSDQQGjPQ",
+      authDomain: "write-racer.firebaseapp.com",
+      databaseURL: "https://write-racer-default-rtdb.firebaseio.com/",
+      projectId: "write-racer",
+      storageBucket: "write-racer.appspot.com",
+      messagingSenderId: "630514342479",
+      appId: "1:630514342479:web:6ad281678526d0a731683a",
+      measurementId: "G-FGC783LTR9"
+    };
+
+    // Initialize Firebase
+    let app;
+    let analytics;
+    let database;
+
 
     /**
     * Add a function that will be called when the window is loaded.
@@ -22,6 +47,9 @@
     * CHANGE: Describe what your init function does here.
     */
     function init() {
+      console.log(firebase);
+
+
       console.log("hi");
       // THIS IS THE CODE THAT WILL BE EXECUTED ONCE THE WEBPAGE LOADS
       renderNewQuote();
