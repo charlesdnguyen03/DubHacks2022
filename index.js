@@ -66,9 +66,6 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
     // result
 
      // THIS IS THE CODE THAT WILL BE EXECUTED ONCE THE WEBPAGE LOADS
-     renderNewQuote("test test Test test test Test test test Test test test Test test test Test test test");
-     generateCanvas();
-     startTimer();
 
 
 
@@ -180,9 +177,9 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
 
    function updateCheck(data) {
       let progressOne = id("p1");
-      let progressTwo = id("p1");
-      let progressThree = id("p1");
-      let progressFour = id("p1");
+      let progressTwo = id("p2");
+      let progressThree = id("p3");
+      let progressFour = id("p4");
 
       gameJSON = data;
 
