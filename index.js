@@ -181,6 +181,14 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
       let progressThree = id("p3");
       let progressFour = id("p4");
 
+      progressOne.value = data["p1-progress"];
+      progressTwo.value = data["p2-progress"];
+      progressThree.value = data["p3-progress"];
+      progressFour.value = data["p4-progress"];
+
+
+
+
       gameJSON = data;
 
    }
