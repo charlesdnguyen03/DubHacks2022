@@ -176,7 +176,8 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
       progressThree.value = data["p3-progress"];
       progressFour.value = data["p4-progress"];
 
-      if (progressOne.value === 100 || progressTwo.value === 100 || progressThree.value === 100 || progressFour.value === 100) {
+      if (progressOne.value === 100 || progressTwo.value === 100 || progressThree.value === 100 || progressFour.value === 100 ||
+          progressOne.value === 99 || progressTwo.value === 99 || progressThree.value === 99 || progressFour.value === 99) {
         data["game-over"] = true;
         gameJSON = data;
         let gameRef = firebase.database().ref(`Game/1`);
@@ -442,7 +443,7 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
    function getRandomQuote() {
      let quote = "";
 
-     let wordAmount = getRandomIntBetween(2, 5); // 10 - 15
+     let wordAmount = getRandomIntBetween(10, 16);
 
      for (let i = 0; i < wordAmount; i++) {
        let currentWord = words[getRandomIndex(words)].toLowerCase();
